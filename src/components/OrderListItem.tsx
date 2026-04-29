@@ -1,25 +1,27 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
-import React from 'react';
-import { Tables } from '../types';
-import relativeTime from 'dayjs/plugin/relativeTime';
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { Href, Link, useSegments } from 'expo-router';
+import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import OrderStatusBadge from './OrderStatusBadge';
 
 dayjs.extend(relativeTime);
 
 type OrderListItemProps = {
-   order: Tables<'orders'>;
+   order: any;
+   isAdmin?: boolean;
 };
 
-const OrderListItem = ({ order }: OrderListItemProps) => {
+const OrderListItem = ({ order, isAdmin }: OrderListItemProps) => {
    const segments = useSegments();
+   const userName = order?.profiles?.full_name || order?.profiles?.username || 'Unknown User';
 
    return (
       <Link href={`/${segments[0]}/orders/${order.id}` as Href} asChild>
          <Pressable style={styles.container}>
-            <View>
+            <View style={{ flex: 1 }}>
                <Text style={styles.title}>Order #{order.id}</Text>
+               {isAdmin && <Text style={styles.user}>User: {userName}</Text>}
                <Text style={styles.time}>{dayjs(order.created_at).fromNow()}</Text>
             </View>
 
@@ -41,6 +43,12 @@ const styles = StyleSheet.create({
    title: {
       fontWeight: 'bold',
       marginVertical: 5,
+   },
+   user: {
+      color: '#2563eb',
+      fontSize: 12,
+      fontWeight: '600',
+      marginVertical: 2,
    },
    time: {
       color: 'gray',

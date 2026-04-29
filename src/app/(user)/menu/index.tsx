@@ -1,8 +1,8 @@
-import ProductListItem from '../../../components/ProductListItem';
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
-import { useProductList } from '../../../api/products';
-import Colors from '../../../constants/Colors';
 import fallbackProducts from '../../../../assets/data/products';
+import { useProductList } from '../../../api/products';
+import ProductListItem from '../../../components/ProductListItem';
+import Colors from '../../../constants/Colors';
 export default function MenuScreen() {
   const { data: products, error, isLoading, isRefetching, refetch } = useProductList();
   const listData = products && products.length > 0 ? products : fallbackProducts;
@@ -74,10 +74,7 @@ const styles = StyleSheet.create({
     padding: 18,
     borderRadius: 20,
     marginBottom: 6,
-    shadowColor: '#000',
-    shadowOpacity: 0.15,
-    shadowRadius: 12,
-    shadowOffset: { width: 0, height: 8 },
+    boxShadow: '0 8px 12px rgba(0, 0, 0, 0.15)',
     elevation: 3,
   },
   headerEyebrow: {

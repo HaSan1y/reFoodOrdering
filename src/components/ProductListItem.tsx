@@ -1,7 +1,7 @@
-import { StyleSheet, Text, Pressable, View } from 'react-native';
+import { Href, Link, useSegments } from 'expo-router';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Colors from '../constants/Colors';
 import { Tables } from '../types';
-import { Href, Link, useSegments } from 'expo-router';
 import RemoteImage from './RemoteImage';
 export const defaultPizzaImage =
    'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png';
@@ -45,10 +45,7 @@ const styles = StyleSheet.create({
       flex: 1,
       borderWidth: 1,
       borderColor: '#eef2ff',
-      shadowColor: '#1f2937',
-      shadowOpacity: 0.08,
-      shadowRadius: 10,
-      shadowOffset: { width: 0, height: 7 },
+      boxShadow: '0 7px 10px rgba(31, 41, 55, 0.08)',
       elevation: 2,
    },
    imageWrapper: {

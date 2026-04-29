@@ -1,28 +1,45 @@
 //changes ./index.tsx screentitle to Menu
 // gadam didnt show image cuz view wasnt stack tag
-import Colors from '../../../constants/Colors';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link, Stack } from 'expo-router';
 import { Pressable } from 'react-native';
+import Colors from '../../../constants/Colors';
+import { useAuth } from '../../../providers/AuthProvider';
 
 export default function MenuStack() {
+   const { signOut } = useAuth();
+
    return (
-      // screenOptions={{}}>  //without this detailspage wont have header right only index will have,plus-square-o
-      <Stack.Screen name="[id]" options={{
-         title: 'Menu', headerRight: () => (
-            <Link href="/(admin)/menu/create" asChild>
-               <Pressable>
-                  {({ pressed }) => (
-                     <FontAwesome
-                        name="pencil"
-                        size={25}
-                        color={Colors.light.tint}
-                        style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                     />
-                  )}
+      <Stack>
+         <Stack.Screen name="[id]" options={{
+            title: 'Menu', headerRight: () => (
+               <Pressable style={{ flexDirection: 'row', gap: 15, marginRight: 15 }}>
+                  <Link href="/(admin)/menu/create" asChild>
+                     <Pressable>
+                        {({ pressed }) => (
+                           <FontAwesome
+                              name="pencil"
+                              size={25}
+                              color={Colors.light.tint}
+                              style={{ opacity: pressed ? 0.5 : 1 }}
+                           />
+                        )}
+                     </Pressable>
+                  </Link>
+                  <Pressable onPress={signOut}>
+                     {({ pressed }) => (
+                        <FontAwesome
+                           name="sign-out"
+                           size={25}
+                           color={Colors.light.tint}
+                           style={{ opacity: pressed ? 0.5 : 1 }}
+                        />
+                     )}
+                  </Pressable>
                </Pressable>
-            </Link>
-         ),
-      }} />
+            ),
+         }} />
+         <Stack.Screen name="create" options={{ title: 'Create Product' }} />
+      </Stack>
    );
 }

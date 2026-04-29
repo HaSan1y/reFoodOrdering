@@ -1,24 +1,24 @@
+import { OrderStatus, OrderStatusList } from '../../../../src/types';
 import { useOrderDetails, useUpdateOrder } from '../../../api/orders';
 import OrderItemListItem from '../../../components/OrderItemListItem';
 import OrderListItem from '../../../components/OrderListItem';
-import { OrderStatus, OrderStatusList } from '../../../../src/types';
-import Colors from '../../../constants/Colors';
 import OrderStatusBadge from '../../../components/OrderStatusBadge';
+import Colors from '../../../constants/Colors';
 
 // import { notifyUserAboutOrderUpdate } from '../../../lib/notifications';
 
 // import orders from '../../../../assets/data/order';
+import dayjs from 'dayjs';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import {
-   FlatList,
-   Text,
-   View,
-   Pressable,
    ActivityIndicator,
    Alert,
+   FlatList,
+   Pressable,
+   Text,
+   View,
 } from 'react-native';
 import { canTransitionStatus, getStatusTimeline, recordStatusTransition } from '../../../lib/orderStatus';
-import dayjs from 'dayjs';
 
 export default function OrderDetailsScreen() {
    const { id: idString } = useLocalSearchParams();
@@ -66,7 +66,17 @@ export default function OrderDetailsScreen() {
             data={order.order_items}
             renderItem={({ item }) => <OrderItemListItem item={item} />}
             contentContainerStyle={{ gap: 10 }}
-            ListHeaderComponent={() => <OrderListItem order={order} />}
+            ListHeaderComponent={() => (
+               <>
+                  <View style={{ backgroundColor: '#eff6ff', padding: 12, borderRadius: 8, marginBottom: 10 }}>
+                     <Text style={{ fontSize: 12, color: '#1e40af' }}>Order from:</Text>
+                     <Text style={{ fontSize: 14, fontWeight: '600', color: '#1e3a8a', marginTop: 4 }}>
+                        {order.profiles?.full_name || order.profiles?.username || 'Unknown User'}
+                     </Text>
+                  </View>
+                  <OrderListItem order={order} isAdmin={true} />
+               </>
+            )}
             ListFooterComponent={() => <>
                <Text style={{ fontWeight: 'bold' }}>Status</Text>
                <View style={{ marginTop: 8, marginBottom: 4 }}>

@@ -24,7 +24,7 @@ export default function ArchivedOrdersScreen() {
          style={styles.page}
          data={orders || []}
          keyExtractor={(item) => item.id.toString()}
-         renderItem={({ item }) => <OrderListItem order={item} />}
+         renderItem={({ item }) => <OrderListItem order={item} isAdmin={true} />}
          contentContainerStyle={styles.content}
          onRefresh={refetch}
          refreshing={isRefetching}

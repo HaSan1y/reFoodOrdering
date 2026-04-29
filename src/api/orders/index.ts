@@ -1,9 +1,9 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { isMockBackendEnabled } from '../../lib/devMode';
+import { mockStore } from '../../lib/mockStore';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../providers/AuthProvider';
 import { InsertTables, OrderStatus, UpdateTables } from '../../types';
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
-import { isMockBackendEnabled } from '../../lib/devMode';
-import { mockStore } from '../../lib/mockStore';
 
 export const useAdminOrderList = ({ archived = false }) => {
    const statuses = archived ? ['Delivered'] : ['New', 'Cooking', 'Delivering'];
@@ -17,7 +17,7 @@ export const useAdminOrderList = ({ archived = false }) => {
 
          const { data, error } = await supabase
             .from('orders')
-            .select('*')
+            .select('*, profiles(id, full_name, username)')
             .in('status', statuses)
             .order('created_at', { ascending: false });
          if (error) {
@@ -67,7 +67,7 @@ export const useOrderDetails = (id: number) => {
 
          const { data, error } = await supabase
             .from('orders')
-            .select('*, order_items(*, products(*))')
+            .select('*, order_items(*, products(*)), profiles(id, full_name, username)')
             .eq('id', id)
             .single();
 

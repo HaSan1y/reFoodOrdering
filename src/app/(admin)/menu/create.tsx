@@ -1,9 +1,9 @@
+import * as ImagePicker from 'expo-image-picker';
+import { useLocalSearchParams } from 'expo-router';
+import { useState } from 'react';
+import { Alert, Button, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 import { defaultPizzaImage } from '../../../../src/components/ProductListItem';
 import Colors from '../../../../src/constants/Colors';
-import { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Image, Alert } from 'react-native'
-import * as ImagePicker from 'expo-image-picker';
-import { Stack, useLocalSearchParams } from 'expo-router';
 
 const CreateProductScreen = () => {
    const [name, setName] = useState('');
@@ -104,7 +104,6 @@ const CreateProductScreen = () => {
    }
    return (
       <View style={styles.container}>
-         <Stack.Screen name="CreateProduct" options={{ title: isUpdating ? 'Update Product' : 'Create Product' }} />
          <Image source={{ uri: image || defaultPizzaImage }} style={styles.image} resizeMode="contain" />
          <Text onPress={pickImage} style={styles.textButton}>Select Image</Text>
 

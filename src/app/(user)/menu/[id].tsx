@@ -1,20 +1,20 @@
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
 import {
+   ActivityIndicator,
+   Pressable,
+   SafeAreaView,
+   StyleSheet,
    Text,
    View,
-   Pressable,
-   ActivityIndicator,
-   StyleSheet,
-   SafeAreaView,
 } from 'react-native';
-import { useMemo, useState } from 'react';
-import { PizzaSize } from '../../../types';
 import { useProduct } from '../../../api/products';
+import Button from '../../../components/Button';
+import { defaultPizzaImage } from '../../../components/ProductListItem';
 import RemoteImage from '../../../components/RemoteImage';
 import Colors from '../../../constants/Colors';
-import Button from '../../../components/Button';
 import { useCart } from '../../../providers/CartProvider';
-import { defaultPizzaImage } from '../../../components/ProductListItem';
+import { PizzaSize } from '../../../types';
 const sizes: PizzaSize[] = ['S', 'M', 'L', 'XL'];
 const ProductDetailsScreen = () => {
    const { id: idString } = useLocalSearchParams();
@@ -106,10 +106,7 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       padding: 16,
       flex: 1,
-      shadowColor: '#0f172a',
-      shadowOpacity: 0.08,
-      shadowRadius: 12,
-      shadowOffset: { width: 0, height: 8 },
+      boxShadow: '0 8px 12px rgba(15, 23, 42, 0.08)',
       elevation: 3,
    },
    title: {
